@@ -122,10 +122,8 @@
         });	
 
         Telegram.WebApp.MainButton.show();
-
-        if (Telegram.WebApp.CloudStorage.setItem.isAvailable()) {
-            Telegram.WebApp.CloudStorage.setItem('a', 'a-value');
-        }
+        Telegram.WebApp.CloudStorage.setItem('a', 'a-value');
+        
 
         // Function to call showPopup API
         function showPopup() {
