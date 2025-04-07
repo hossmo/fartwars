@@ -91,6 +91,9 @@
             timerDisplay.style.textAlign = 'center';
             timerDisplay.style.fontSize = '20px';
             timerDisplay.style.marginTop = '20px';
+
+            const usrid = Telegram.WebApp.CloudStorage.getItem('a');
+
             document.body.appendChild(timerDisplay);
 
             timerInterval = setInterval(() => {
@@ -98,7 +101,7 @@
                     timerDisplay.innerText = `Time: ${timer}s`;
                     timer--;
                 } else {
-                    timerDisplay.innerText = 'You have been farted on :(';
+                    timerDisplay.innerText = `You have been farted on by ${usrid} :(`;
                     clearInterval(timerInterval);
                 }
             }, 1000);
@@ -120,13 +123,6 @@
         if (Telegram.WebApp.CloudStorage.setItem.isAvailable()) {
             Telegram.WebApp.CloudStorage.setItem('a', 'a-value');
         }
-
-        console.log(Telegram.WebApp.CloudStorage);
-        
-        if (Telegram.WebApp.CloudStorage.getItem.isAvailable()) {
-            const data = Telegram.WebApp.CloudStorage.getItem('a');
-            console.log(data);
-        };
 
         // Function to call showPopup API
         function showPopup() {
