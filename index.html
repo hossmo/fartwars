@@ -83,6 +83,7 @@
 
         let timer = 5; // Timer starts at 5 seconds
         let timerInterval;
+        
 
         function startTimer() {
             const timerDisplay = document.createElement('div');
@@ -115,6 +116,15 @@
         });	
 
         Telegram.WebApp.MainButton.show();
+
+        if (Telegram.WebApp.CloudStorage.setItem.isAvailable()) {
+            await Telegram.WebApp.CloudStorage.setItem('a', 'a-value');
+        }
+
+        if (Telegram.WebApp.CloudStorage.getItem.isAvailable()) {
+            const data = await cloudStorage.getItem('a');
+            console.log(data);
+        };
 
         // Function to call showPopup API
         function showPopup() {
