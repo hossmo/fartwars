@@ -83,7 +83,7 @@
 
         let timer = 5; // Timer starts at 5 seconds
         let timerInterval;
-        
+        let test = 'INGEN';
 
         function startTimer() {
             const timerDisplay = document.createElement('div');
@@ -91,11 +91,10 @@
             timerDisplay.style.textAlign = 'center';
             timerDisplay.style.fontSize = '20px';
             timerDisplay.style.marginTop = '20px';
-            let test = 'INGEN';
-
+            /*
             Telegram.WebApp.CloudStorage.getItem('a', (err, data) => {
                 test = data;
-            });
+            });*/
 
             document.body.appendChild(timerDisplay);
 
