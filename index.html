@@ -118,11 +118,11 @@
         Telegram.WebApp.MainButton.show();
 
         if (Telegram.WebApp.CloudStorage.setItem.isAvailable()) {
-            await Telegram.WebApp.CloudStorage.setItem('a', 'a-value');
+            Telegram.WebApp.CloudStorage.setItem('a', 'a-value');
         }
 
         if (Telegram.WebApp.CloudStorage.getItem.isAvailable()) {
-            const data = await cloudStorage.getItem('a');
+            const data = Telegram.WebApp.CloudStorage.getItem('a');
             console.log(data);
         };
 
