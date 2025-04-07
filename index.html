@@ -91,8 +91,11 @@
             timerDisplay.style.textAlign = 'center';
             timerDisplay.style.fontSize = '20px';
             timerDisplay.style.marginTop = '20px';
+            let test = 'INGEN';
 
-            const usrid = Telegram.WebApp.CloudStorage.getItem('a');
+            Telegram.WebApp.CloudStorage.getItem('a', (err, data) => {
+                test = data;
+            });
 
             document.body.appendChild(timerDisplay);
 
@@ -101,7 +104,7 @@
                     timerDisplay.innerText = `Time: ${timer}s`;
                     timer--;
                 } else {
-                    timerDisplay.innerText = `You have been farted on by ${usrid} :(`;
+                    timerDisplay.innerText = `You have been farted on by ${test} :(`;
                     clearInterval(timerInterval);
                 }
             }, 1000);
