@@ -81,10 +81,10 @@
             document.documentElement.className = Telegram.WebApp.colorScheme;
         });
 
-        console.log(Telegram.WebApp.WebAppUser);
         let timer = 5; // Timer starts at 5 seconds
         let timerInterval;
-        let test = 'INGEN';
+        let initData = new URLSearchParams(Telegram.WebApp.initData);
+        let user = JSON.parse(initData.get("user"));
 
         function startTimer() {
             const timerDisplay = document.createElement('div');
@@ -92,10 +92,6 @@
             timerDisplay.style.textAlign = 'center';
             timerDisplay.style.fontSize = '20px';
             timerDisplay.style.marginTop = '20px';
-            /*
-            Telegram.WebApp.CloudStorage.getItem('a', (err, data) => {
-                test = data;
-            });*/
 
             document.body.appendChild(timerDisplay);
 
@@ -104,7 +100,7 @@
                     timerDisplay.innerText = `Time: ${timer}s`;
                     timer--;
                 } else {
-                    timerDisplay.innerText = `You have been farted on by ${test} :(`;
+                    timerDisplay.innerText = `You have been farted on by ${user.first_name} :(`;
                     clearInterval(timerInterval);
                 }
             }, 1000);
@@ -122,8 +118,6 @@
         });	
 
         Telegram.WebApp.MainButton.show();
-        Telegram.WebApp.CloudStorage.setItem('a', 'a-value');
-        
 
         // Function to call showPopup API
         function showPopup() {
