@@ -81,15 +81,14 @@
             document.documentElement.className = Telegram.WebApp.colorScheme;
         });
 
-        let timer = 5; // Timer starts at 5 seconds
-        let timerInterval;
         let initData = new URLSearchParams(Telegram.WebApp.initData);
         let user = JSON.parse(initData.get("user"));
         let startParam = initData.get("start_param");
 
-        if(startParam === null) {
-            startParam = Date.now();
-        }
+
+        let millis = (startParam+30000) - Date.now();
+        let timer = Math.floor(millis / 1000);
+        let timerInterval;
 
         function startTimer() {
             const timerDisplay = document.createElement('div');
@@ -111,7 +110,9 @@
             }, 1000);
         }
 
-        startTimer(); // Start the timer
+        if(startParam !== null) {
+            startTimer(); // Start the timer
+        }
 
         // Show main button
         Telegram.WebApp.MainButton.setParams({
@@ -119,6 +120,11 @@
         });
 
         Telegram.WebApp.MainButton.onClick(function () {
+            
+            if(millis < 0) {
+                startParam = Date.now();
+            }
+
             let link_text = encodeURIComponent(`${user.first_name} farted in your general direction 💨 Hurry up and pass the gas before it's to late!`);
             let link = `https://t.me/share/url?url=t.me/HossmoBot/FartWars?startapp=${startParam}&text=${link_text}`;
             Telegram.WebApp.openTelegramLink(link);
