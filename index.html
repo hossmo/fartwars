@@ -114,7 +114,9 @@
         });
 
         Telegram.WebApp.MainButton.onClick(function () {
-            Telegram.WebApp.openTelegramLink('https://t.me/share/url?url=t.me/HossmoBot/FartWars&text=Play%20Fart%20Wars%21%F0%9F%92%A8');
+            let link_text = encodeURIComponent(`${user.first_name} Farted in your general direction 💨 Hurry up and pass the gas before it's to late!`);
+            let link = `https://t.me/share/url?url=t.me/HossmoBot/FartWars&text=${link_text}`;
+            Telegram.WebApp.openTelegramLink(link);
         });	
 
         Telegram.WebApp.MainButton.show();
