@@ -86,7 +86,7 @@
         let startParam = initData.get("start_param");
 
 
-        let millis = (startParam+30000) - Date.now();
+        let millis = (Number(startParam)+30000) - Date.now();
         let timer = Math.floor(millis / 1000);
         let timerInterval;
 
@@ -120,7 +120,7 @@
         });
 
         Telegram.WebApp.MainButton.onClick(function () {
-            
+
             if(millis < 0) {
                 startParam = Date.now();
             }
