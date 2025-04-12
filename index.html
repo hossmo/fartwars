@@ -128,7 +128,8 @@
             let link_text = encodeURIComponent(`${user.first_name} farted in your general direction 💨 Hurry up and pass the gas before it's to late!`);
             let link = `https://t.me/share/url?url=t.me/HossmoBot/FartWars?startapp=${startParam}&text=${link_text}`;
             //Telegram.WebApp.openTelegramLink(link);
-            Telegram.WebApp.switchInlineQuery('Test', ['users','bots','groups','channels']);
+            
+            Telegram.WebApp.InlineKeyboardButton('TEST', link);
             //Telegram.WebApp.sendData('Test');
         });
 
