@@ -76,7 +76,6 @@
         // Init TWA
         Telegram.WebApp.ready();
         
-        // Event occurs whenever theme settings are changed in the user's Telegram app (including switching to night mode).
         Telegram.WebApp.onEvent('themeChanged', function() {
             document.documentElement.className = Telegram.WebApp.colorScheme;
         });
@@ -129,7 +128,7 @@
             let link = `https://t.me/share/url?url=t.me/HossmoBot/FartWars?startapp=${startParam}&text=${link_text}`;
             //Telegram.WebApp.openTelegramLink(link);
             
-            Telegram.WebView.postEvent('web_app_switch_inline_query','Fart!');
+            Telegram.WebApp.postEvent('web_app_switch_inline_query','Fart!');
             //Telegram.WebApp.sendData('Test');
         });
 
