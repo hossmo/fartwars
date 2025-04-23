@@ -66,6 +66,8 @@
     <main>
         <h1>Fart Wars</h1>
         <p>Welcome to the Fart Wars game! You have 5 seconds to pass the gas to your friend.</p>
+
+        <button onclick="pass_the_gas()">Pass the gas</button>
     </main>
     <div id="viewport"></div>
     <div id="viewport-params-size"></div>
@@ -119,7 +121,7 @@
             text: 'Send Fart'
         });
 
-        Telegram.WebApp.MainButton.onClick(function () {
+        function pass_the_gas() {
 
             if(timer < 0) {
                 startParam = Date.now();
@@ -129,9 +131,9 @@
             let link = `https://t.me/share/url?url=t.me/HossmoBot/FartWars?startapp=${startParam}&text=${link_text}`;
             //Telegram.WebApp.openTelegramLink(link);
             
-            Telegram.WebApp.switchInlineQuery('Pass gas!');
+            Telegram.WebApp.switchInlineQuery('Test', ['users','bots','groups','channels']);
             //Telegram.WebApp.sendData('Test');
-        });
+        };
 
         Telegram.WebApp.MainButton.show();
 
