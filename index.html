@@ -1,190 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Fart Wars</title>
-    <style>
-        body {
-            --bg-color: var(--tg-theme-bg-color);
-            font: 12px/18px "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--tg-theme-text-color);
-            margin: 48px 24px;
-            padding: 0;
-            color-scheme: var(--tg-color-scheme);
+<script src="https://telegram.org/js/games.js"></script>
+<script>
+    // Initialize the game
+    TelegramGameProxy.init();
+
+    // Create the game UI
+    const gameContainer = document.createElement('div');
+    gameContainer.style.display = 'flex';
+    gameContainer.style.justifyContent = 'center';
+    gameContainer.style.gap = '20px';
+    gameContainer.style.marginTop = '50px';
+
+    // Generate three boxes
+    const boxes = [];
+    for (let i = 1; i <= 3; i++) {
+        const box = document.createElement('button');
+        box.textContent = `Box ${i}`;
+        box.style.padding = '20px';
+        box.style.fontSize = '18px';
+        box.style.cursor = 'pointer';
+        box.dataset.boxId = i;
+        box.onclick = () => handleBoxClick(i);
+        boxes.push(box);
+        gameContainer.appendChild(box);
+    }
+
+    document.body.appendChild(gameContainer);
+
+    // Randomly determine which box contains the fart
+    const fartBox = Math.ceil(Math.random() * 3);
+
+    // Handle box click
+    function handleBoxClick(boxId) {
+        if (boxId === fartBox) {
+            alert('💨 You found the fart! Better luck next time!');
+        } else {
+            alert('🎉 You avoided the fart! Congratulations!');
         }
 
-        a {
-            color: var(--tg-theme-link-color);
-        }
-        #viewport {
-            position: fixed;
-            left: 0;
-            right: 0;
-            top: 0;
-            height: var(--tg-viewport-stable-height, 100vh);
-            pointer-events: none;
-            transition: all .2s ease;
-        }
-        #viewport:after {
-            content: '';
-            display: block;
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            border-width: 4px;
-            border-style: solid;
-            border-image: linear-gradient(45deg, rgba(64, 224, 208, .5), rgba(173, 255, 47, .5)) 1;
-        }
-
-        #viewport-params-size,
-        #viewport-params-expand {
-            content: attr(text);
-            position: absolute;
-            display: inline-block;
-            background: var(--tg-theme-link-color, rgb(64, 224, 208));
-            right: 4px;
-            left: auto;
-            font-size: 8px;
-            padding: 4px;
-            vertical-align: top;
-        }
-        #viewport-params-size {
-            top: 4px;
-        }
-        #viewport-params-expand {
-            top: 30px;
-        }
-    </style>
-</head>
-
-<body>
-    <main>
-        <h1>Fart Wars</h1>
-        <p>Welcome to the Fart Wars game! You have 5 seconds to pass the gas to your friend.</p>
-
-        <button onclick="pass_the_gas()">Pass the gas</button>
-    </main>
-    <div id="viewport"></div>
-    <div id="viewport-params-size"></div>
-    <div id="viewport-params-expand"></div>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
-    <script>
-        // Init TWA
-        Telegram.WebApp.ready();
-        
-        // Event occurs whenever theme settings are changed in the user's Telegram app (including switching to night mode).
-        Telegram.WebApp.onEvent('themeChanged', function() {
-            document.documentElement.className = Telegram.WebApp.colorScheme;
-        });
-
-        let initData = new URLSearchParams(Telegram.WebApp.initData);
-        let user = JSON.parse(initData.get("user"));
-        let startParam = initData.get("start_param");
-
-
-        let millis = (Number(startParam)+30000) - Date.now();
-        let timer = Math.floor(millis / 1000);
-        let timerInterval;
-
-        function startTimer() {
-            const timerDisplay = document.createElement('div');
-            timerDisplay.id = 'timerDisplay';
-            timerDisplay.style.textAlign = 'center';
-            timerDisplay.style.fontSize = '20px';
-            timerDisplay.style.marginTop = '20px';
-            
-            document.body.appendChild(timerDisplay);
-
-            timerInterval = setInterval(() => {
-                if (timer > 0) {
-                    timerDisplay.innerText = `Time: ${timer}s`;
-                    timer--;
-                } else {
-                    timerDisplay.innerText = `You have been farted on!`;
-                    clearInterval(timerInterval);
-                }
-            }, 1000);
-        }
-
-        if(startParam !== null) {
-            startTimer(); // Start the timer
-        }
-
-        // Show main button
-        Telegram.WebApp.MainButton.setParams({
-            text: 'Send Fart'
-        });
-
-        function pass_the_gas() {
-
-            if(timer < 0) {
-                startParam = Date.now();
-            }
-
-            let link_text = encodeURIComponent(`${user.first_name} farted in your general direction 💨 Hurry up and pass the gas before it's to late!`);
-            let link = `https://t.me/share/url?url=t.me/HossmoBot/FartWars?startapp=${startParam}&text=${link_text}`;
-            //Telegram.WebApp.openTelegramLink(link);
-            
-            Telegram.WebApp.switchInlineQuery('Test', ['users','bots','groups','channels']);
-            //Telegram.WebApp.sendData('Test');
-        };
-
-        Telegram.WebApp.MainButton.show();
-
-        // Function to call showPopup API
-        function showPopup() {
-            Telegram.WebApp.showPopup({
-                title: 'Title',
-                message: 'Some message',
-                buttons: [
-                    {id: 'link', type: 'default', text: 'Open ton.org'},
-                    {type: 'cancel'},
-                ]
-            }, function(btn) {
-                if (btn === 'link') {
-                    Telegram.WebApp.openLink('https://ton.org/');
-                }
-            });
-        };
-
-        // Function to toggle main TWA button
-        function toggleMainButton() {
-            if (Telegram.WebApp.MainButton.isVisible) {
-                Telegram.WebApp.MainButton.hide();
-            } else {
-                Telegram.WebApp.MainButton.show();
-            }
-        };
-
-        function setViewportData() {
-            var sizeEl = document.getElementById('viewport-params-size');
-            sizeEl.innerText = 'width: ' + window.innerWidth + ' x ' + 
-                'height: ' + Telegram.WebApp.viewportStableHeight;
-
-            var expandEl = document.querySelector('#viewport-params-expand');
-            expandEl.innerText = 'Is Expanded: ' + (Telegram.WebApp.isExpanded ? 'true' : 'false');
-        }
-
-        Telegram.WebApp.setHeaderColor('secondary_bg_color');
-
-        setViewportData();
-
-        Telegram.WebApp.onEvent('viewportChanged', setViewportData);
-
-        Telegram.WebApp.onEvent('themeChanged', function() {
-            document.body.setAttribute('style', '--bg-color:' + Telegram.WebApp.backgroundColor);
-        });
-
-    </script>
-
-    <!-- Eruda is console for mobile browsers -->
-    <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
-    <script>eruda.init();</script>
-</body>
-</html>
+        // End the game
+        TelegramGameProxy.gameOver();
+    }
+</script>
