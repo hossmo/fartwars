@@ -1,43 +1,60 @@
-<script src="https://telegram.org/js/games.js"></script>
-<script>
-    // Initialize the game
-    TelegramGameProxy.init();
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="A fun Telegram mini-game where you choose between three boxes. One box contains a fart!">
+    <meta name="author" content="Robin">
+    <title>Fart Wars</title>
+    <script src="https://telegram.org/js/games.js"></script>
+</head>
+<body>
+    <script>
+        // Initialize the game
+        TelegramGameProxy.init();
 
-    // Create the game UI
-    const gameContainer = document.createElement('div');
-    gameContainer.style.display = 'flex';
-    gameContainer.style.justifyContent = 'center';
-    gameContainer.style.gap = '20px';
-    gameContainer.style.marginTop = '50px';
+        // Create the game UI
+        const gameContainer = document.createElement('div');
+        gameContainer.style.display = 'flex';
+        gameContainer.style.justifyContent = 'center';
+        gameContainer.style.gap = '20px';
+        gameContainer.style.marginTop = '50px';
 
-    // Generate three boxes
-    const boxes = [];
-    for (let i = 1; i <= 3; i++) {
-        const box = document.createElement('button');
-        box.textContent = `Box ${i}`;
-        box.style.padding = '20px';
-        box.style.fontSize = '18px';
-        box.style.cursor = 'pointer';
-        box.dataset.boxId = i;
-        box.onclick = () => handleBoxClick(i);
-        boxes.push(box);
-        gameContainer.appendChild(box);
-    }
-
-    document.body.appendChild(gameContainer);
-
-    // Randomly determine which box contains the fart
-    const fartBox = Math.ceil(Math.random() * 3);
-
-    // Handle box click
-    function handleBoxClick(boxId) {
-        if (boxId === fartBox) {
-            alert('💨 You found the fart! Better luck next time!');
-        } else {
-            alert('🎉 You avoided the fart! Congratulations!');
+        // Generate three boxes
+        const boxes = [];
+        for (let i = 1; i <= 3; i++) {
+            const box = document.createElement('button');
+            box.textContent = `Box ${i}`;
+            box.style.padding = '20px';
+            box.style.fontSize = '18px';
+            box.style.cursor = 'pointer';
+            box.dataset.boxId = i;
+            box.onclick = () => handleBoxClick(i);
+            boxes.push(box);
+            gameContainer.appendChild(box);
         }
 
-        // End the game
-        TelegramGameProxy.gameOver();
-    }
-</script>
+        document.body.appendChild(gameContainer);
+
+        // Randomly determine which box contains the fart
+        const fartBox = Math.ceil(Math.random() * 3);
+
+        // Handle box click
+        function handleBoxClick(boxId) {
+            if (boxId === fartBox) {
+                alert('💨 You found the fart! Better luck next time!');
+            } else {
+                alert('🎉 You avoided the fart! Congratulations!');
+            }
+
+            // End the game
+            TelegramGameProxy.gameOver();
+        }
+    </script>
+
+    <!-- Eruda is console for mobile browsers -->
+    <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script>
+</body>
+</html>
