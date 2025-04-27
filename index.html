@@ -10,10 +10,12 @@
     <script src="https://telegram.org/js/games.js"></script>
 </head>
 <body>
+    <button onclick="TelegramGameProxy.shareScore()">Share score</button>
+    
     <script>
         // Initialize the game
         console.log(TelegramGameProxy.initParams);
-        
+
         // Create the game UI
         const gameContainer = document.createElement('div');
         gameContainer.style.display = 'flex';
